@@ -32,8 +32,8 @@ exports.login = async (req, res) => {
     const employee = await AuthService.findEmployeeByEmail(req.body.email);
     if (employee) {
         const isMatched = await bcryptUtil.compareHash(req.body.password, employee.password);
-        if (isMatched && employee.active == 1) {
-            const token = await jwtUtil.createToken({ id: employee.id, username: employee.username, roleid : employee.roleid });
+        if (isMatched ) {
+            const token = await jwtUtil.createToken(employee);
             return res.json({
                 employee: employee,
                 access_token: token,
@@ -47,15 +47,6 @@ exports.login = async (req, res) => {
 }
 
 exports.getEmployeeByID = async (req, res) => {
-
-    if (req.employeeCurrent.roleid === 'EMPLOYEE') {
-        return res.status(400).json({
-            message: 'Bạn không có quyền truy cập chức năng này.',
-            status: false
-        });
-    }
-
-
     const employee = await AuthService.findEmployeeById(req.params.id);
     return res.json({
         data: employee,
@@ -69,14 +60,6 @@ exports.logout = async (req, res) => {
 }
 
 exports.getEmployees = async (req, res) => {
-    console.log(req.employeeCurrent.roleid)
-
-    if (req.employeeCurrent.roleid === 'EMPLOYEE') {
-        return res.status(400).json({
-            message: 'Bạn không có quyền truy cập chức năng này.',
-            status: false
-        });
-    }
 
     var page = req.query.page || 1;
     var limit = req.query.limit || 10;
