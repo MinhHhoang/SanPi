@@ -7,7 +7,8 @@ const CustomerGuard = require('../middleware/customer.middleware');
 const validate = require('../utils/validator.util');
 
 const AuthController = require('../controllers/employee.controller');
-const FactoryController = require('../controllers/factory.controller');
+const NewController = require('../controllers/new.controller');
+const GuidlineController = require('../controllers/guidline.controller');
 const ProductController = require('../controllers/product.controller');
 const CustomerController = require('../controllers/customer.controller');
 const BookingController = require('../controllers/booking.controller');
@@ -16,8 +17,9 @@ const SettingController = require('../controllers/setting.controller');
 const DashboardController = require('../controllers/dashboard.controller');
 
 const authValidate = require('../validatons/employee.validation');
-const FactoryValidate = require('../validatons/factory.validation');
-const ProductValidate = require('../validatons/product.validation');
+const NewValidate = require('../validatons/new.validation');
+const GuidlineValidate = require('../validatons/guidline.validation');
+const ProductValidate = require('../validatons/guidline.validation');
 const CustomerValidate = require('../validatons/customer.validation');
 const BookingValidate = require('../validatons/booking.validation');
 const SettingValidate = require('../validatons/setting.validation');
@@ -31,20 +33,25 @@ router.post('/login', validate(authValidate.login), ErrorHandler(AuthController.
 router.get('/logout', AuthGuard, ErrorHandler(AuthController.logout));
 router.get('/employee/search', AuthGuard, ErrorHandler(AuthController.getEmployees));
 router.get('/employee/:id', AuthGuard, ErrorHandler(AuthController.getEmployeeByID));
-router.put('/employee/:id', AuthGuard, ErrorHandler(AuthController.updateEmployee));
 router.put('/employee/changepassword/:id', AuthGuard, ErrorHandler(AuthController.changePassword));
-router.put('/employee/active/:id', AuthGuard, ErrorHandler(AuthController.setActive));
 
 
-//Factory
-router.post('/factory/create', AuthGuard, validate(FactoryValidate.create), ErrorHandler(FactoryController.create));
-router.put('/factory/:id', AuthGuard, validate(FactoryValidate.create), ErrorHandler(FactoryController.update));
-router.delete('/factory/:id', AuthGuard, ErrorHandler(FactoryController.delete));
-router.get('/factory', ErrorHandler(FactoryController.getFactories));
-router.get('/factories', ErrorHandler(FactoryController.getFactories));
+//News
+router.post('/new/create', AuthGuard, validate(NewValidate.create), ErrorHandler(NewController.create));
+router.put('/new/:id', AuthGuard, validate(NewValidate.create), ErrorHandler(NewController.update));
+router.delete('/new/:id', AuthGuard, ErrorHandler(NewController.delete));
+router.get('/new', ErrorHandler(NewController.getObjects));
+router.get('/news', ErrorHandler(NewController.getObjectById));
+
+//Guidline
+router.post('/guidline/create', AuthGuard, validate(GuidlineValidate.create), ErrorHandler(GuidlineController.create));
+router.put('/guidline/:id', AuthGuard, validate(GuidlineValidate.create), ErrorHandler(GuidlineController.update));
+router.delete('/guidline/:id', AuthGuard, ErrorHandler(GuidlineController.delete));
+router.get('/guidline', ErrorHandler(GuidlineController.getObjects));
+router.get('/guidline', ErrorHandler(GuidlineController.getObjectById));
 
 
-//Product
+//Guidline
 router.post('/product/create', AuthGuard, validate(ProductValidate.create), ErrorHandler(ProductController.create));
 router.put('/product/:id', AuthGuard, validate(ProductValidate.create), ErrorHandler(ProductController.update));
 router.delete('/product/:id', AuthGuard, ErrorHandler(ProductController.delete));

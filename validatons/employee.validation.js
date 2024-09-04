@@ -9,12 +9,8 @@ const validatePassword = (value) => {
 
 module.exports = {
     create: Joi.object().keys({
-        username: Joi.string().required(),
         email: Joi.string().email().required(),
-        phone: Joi.string().required(),
-        password: Joi.string().min(8).max(16).required().external(validatePassword),
-        roleid:Joi.string().required(),
-        image: Joi.string().allow("", null),
+        password: Joi.string().min(8).max(16).required().external(validatePassword)
     }),
     login: Joi.object().keys({
         email: Joi.string().email().required(),

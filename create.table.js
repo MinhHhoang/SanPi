@@ -1,12 +1,3 @@
-const Employees = require('./models/employee.model'); 
-const Factories = require('./models/factory.model'); 
-const Products = require('./models/product.model'); 
-const Customers = require('./models/customer.model'); 
-const Bookings = require('./models/booking.model'); 
-const Settings = require('./models/setting.model'); 
-const Schedules = require('./models/schedule.model'); 
-const ReminderCares = require('./models/remindercare.model'); 
-const BookingDetail = require('./models/bookingdetail.model'); 
 const sequelize = require('./models/connection');
 
 

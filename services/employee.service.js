@@ -39,10 +39,7 @@ exports.findAll = (page, limit, query) => {
     limit: +limit,
     offset: skip,
     where: {
-      [Op.or]: {
-        username: { [Op.like]: `%${query}%` },
-        email: { [Op.like]: `%${query}%` },
-      }
+      email: { [Op.like]: `%${query}%` },
     },
   });
 };

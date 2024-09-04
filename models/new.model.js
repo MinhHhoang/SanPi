@@ -10,7 +10,6 @@ const News = sequelize.define('News', {
     },
     image: {
         type: DataTypes.STRING 
-    },
-    
+    }, 
 }); 
 module.exports = News;

@@ -13,9 +13,6 @@ const Guidelines = sequelize.define('Guidelines', {
     },
     video_url :{
         type: DataTypes.INTEGER
-    },
-    type_coin : {
-        type: DataTypes.STRING 
-    },
+    }
 }); 
 module.exports = Guidelines;
