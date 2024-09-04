@@ -19,7 +19,6 @@ module.exports = async (req, res, next) => {
             
             const decoded = await jwtUtil.verifyToken(token);
             req.employeeCurrent = decoded;
-            console.log(decoded)
 
             if(req.employeeCurrent.roleid === undefined) {
                 return res.status(401).json({ message: 'Unauthorized' });

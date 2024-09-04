@@ -33,7 +33,7 @@ exports.login = async (req, res) => {
     if (employee) {
         const isMatched = await bcryptUtil.compareHash(req.body.password, employee.password);
         if (isMatched ) {
-            const token = await jwtUtil.createToken(employee);
+            const token = await jwtUtil.createToken({...employee});
             return res.json({
                 employee: employee,
                 access_token: token,
