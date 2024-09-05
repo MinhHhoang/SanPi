@@ -3,7 +3,7 @@ const sequelize = require('./connection');
 
 const Guidelines = sequelize.define('Guidelines', {
     title: {
-        type: DataTypes.INTEGER 
+        type: DataTypes.STRING 
     },
     image: {
         type: DataTypes.STRING 
@@ -12,7 +12,7 @@ const Guidelines = sequelize.define('Guidelines', {
         type: DataTypes.STRING 
     },
     video_url :{
-        type: DataTypes.INTEGER
+        type: DataTypes.STRING
     }
 }); 
 module.exports = Guidelines;
