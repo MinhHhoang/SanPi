@@ -20,10 +20,6 @@ module.exports = async (req, res, next) => {
             const decoded = await jwtUtil.verifyToken(token);
             req.employeeCurrent = decoded;
 
-            if(req.employeeCurrent.roleid === undefined) {
-                return res.status(401).json({ message: 'Unauthorized' });
-            }
-
             req.token = token;
             next();
         } catch (error) {
