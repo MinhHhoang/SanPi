@@ -1,58 +1,56 @@
-const CustomerModel = require('../models/customer.model');
+const Model = require('../models/customer.model');
 const cacheUtil = require('../utils/cache.util');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
-exports.createCustomer = (customer) => {
-  return CustomerModel.create(customer);
+exports.create = (object) => {
+  return Model.create(object);
 }
 
-exports.updateCustomer = (customer, id) => {
-  return CustomerModel.update(customer, {
+exports.update = (object, id) => {
+  return Model.update(object, {
     where: { id: id },
   });
 };
 
-exports.findCustomerByEmail = (email) => {
-  return CustomerModel.findOne({
+exports.findByEmail = (email) => {
+  return Model.findOne({
     where: {
       email: email,
     }
   })
 }
 
-exports.findCustomerByPhone = (phone) => {
-    return CustomerModel.findOne({
-      where: {
-        phone: phone,
-      }
-    })
-  }
-
-exports.findCustomerById = (id) => {
-  return CustomerModel.findByPk(id);
+exports.findById = (id) => {
+  return Model.findByPk(id);
 }
 
 
+exports.logout = (token, exp) => {
+  const now = new Date();
+  const expire = new Date(exp * 1000);
+  const milliseconds = expire.getTime() - now.getTime();
+  /* ----------------------------- BlackList Token ---------------------------- */
+  return cacheUtil.set(token, token, milliseconds);
+}
 
-exports.findAll = (page, limit, query, active) => {
+exports.findAll = (page, limit, query) => {
   const skip = (page - 1) * limit;
-  return CustomerModel.findAll({
+  return Model.findAll({
     limit: +limit,
     offset: skip,
     where: {
-      ...(!!active ? {active} : {}), 
-      [Op.or]: {
-        fullname: { [Op.like]: `%${query}%` },
-        phone: { [Op.like]: `%${query}%` },
-        email: { [Op.like]: `%${query}%` },
-      }
+      email: { [Op.like]: `%${query}%` },
     },
   });
 };
 
-exports.getTotal = () => {
-  return CustomerModel.count();
+exports.getTotal = (query) => {
+  return Model.count({
+    where: {
+      email: { [Op.like]: `%${query}%` },
+    },
+  });
 };
 
 

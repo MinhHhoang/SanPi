@@ -6,11 +6,13 @@ const AuthGuard = require('../middleware/auth.middleware');
 const validate = require('../utils/validator.util');
 
 const AuthController = require('../controllers/employee.controller');
+const CustomerController = require('../controllers/customer.controller');
 const NewController = require('../controllers/new.controller');
 const GuidlineController = require('../controllers/guidline.controller');
 const CoinController = require('../controllers/coin.controller');
 
 const authValidate = require('../validatons/employee.validation');
+const CustomerValidate = require('../validatons/customer.validation');
 const NewValidate = require('../validatons/new.validation');
 const GuidlineValidate = require('../validatons/guidline.validation');
 const CoinValidate = require('../validatons/coin.validation');
@@ -44,6 +46,15 @@ router.put('/coin/:id', AuthGuard, validate(CoinValidate.create), ErrorHandler(C
 router.delete('/coin/:id', AuthGuard, ErrorHandler(CoinController.delete));
 router.get('/coin', ErrorHandler(CoinController.getObjects));
 router.get('/coin', ErrorHandler(CoinController.getObjectById));
+
+//Customer
+router.post('/customer/create', validate(CustomerValidate.create), ErrorHandler(CustomerController.create));
+router.post('/customer/login', validate(CustomerValidate.login), ErrorHandler(CustomerController.login));
+router.get('/customer/logout', AuthGuard, ErrorHandler(CustomerController.logout));
+router.get('/customer/search', AuthGuard, ErrorHandler(CustomerController.getCustomers));
+router.get('/customer/:id', AuthGuard, ErrorHandler(CustomerController.getCustomerID));
+router.put('/customer/changepassword/:id', AuthGuard, ErrorHandler(CustomerController.changePassword));
+router.put('/customer/:id', AuthGuard, validate(CoinValidate.create), ErrorHandler(CustomerController.update));
 
 
 
