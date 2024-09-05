@@ -54,7 +54,7 @@ router.get('/customer/logout', AuthGuard, ErrorHandler(CustomerController.logout
 router.get('/customer/search', AuthGuard, ErrorHandler(CustomerController.getCustomers));
 router.get('/customer/:id', AuthGuard, ErrorHandler(CustomerController.getCustomerID));
 router.put('/customer/changepassword/:id', AuthGuard, ErrorHandler(CustomerController.changePassword));
-router.put('/customer/:id', AuthGuard, validate(CoinValidate.create), ErrorHandler(CustomerController.update));
+router.put('/customer/:id', AuthGuard, validate(CustomerValidate.create), ErrorHandler(CustomerController.update));
 
 
 
