@@ -10,12 +10,14 @@ const CustomerController = require('../controllers/customer.controller');
 const NewController = require('../controllers/new.controller');
 const GuidlineController = require('../controllers/guidline.controller');
 const CoinController = require('../controllers/coin.controller');
+const BankingController = require('../controllers/banking.controller');
 
 const authValidate = require('../validatons/employee.validation');
 const CustomerValidate = require('../validatons/customer.validation');
 const NewValidate = require('../validatons/new.validation');
 const GuidlineValidate = require('../validatons/guidline.validation');
 const CoinValidate = require('../validatons/coin.validation');
+const BankingValidate = require('../validatons/banking.validation');
 
 
 //Employee
@@ -54,9 +56,12 @@ router.get('/customer/logout', AuthGuard, ErrorHandler(CustomerController.logout
 router.get('/customer/search', AuthGuard, ErrorHandler(CustomerController.getCustomers));
 router.get('/customer/:id', AuthGuard, ErrorHandler(CustomerController.getCustomerID));
 router.put('/customer/changepassword/:id', AuthGuard, ErrorHandler(CustomerController.changePassword));
-router.put('/customer/:id', AuthGuard, validate(CustomerValidate.create), ErrorHandler(CustomerController.update));
+router.put('/customer/:id', AuthGuard, validate(CustomerValidate.update), ErrorHandler(CustomerController.update));
 
-
+//Banking Customer
+router.post('/banking/create', AuthGuard, validate(BankingValidate.create), ErrorHandler(BankingController.create));
+router.get('/banking/:id', AuthGuard, ErrorHandler(BankingController.getBankings));
+router.delete('/banking/:id', AuthGuard, ErrorHandler(BankingController.delete));
 
 
 router.all('*', (req, res) => res.status(400).json({ message: 'Bad Request.' }));

@@ -23,6 +23,9 @@ exports.create = async (req, res) => {
     }
 
     const customer = await Service.create(object);
+    
+
+
     return res.json({
         data: customer,
         message: 'Tạo mới thành công.'
@@ -36,6 +39,7 @@ exports.update = async (req, res) => {
 
     const object = {
         ...result,
+        image: req.body.image,
         full_name: req.body.full_name,
         phone: req.body.phone,
         
