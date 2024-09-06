@@ -11,7 +11,7 @@ module.exports = {
     create: Joi.object().keys({
         email: Joi.string().email().required(),
         full_name: Joi.string().required(),
-        phone: Joi.string().email().required(),
+        phone: Joi.string().required(),
         ref_email: Joi.string().email().required(),
         password: Joi.string().min(8).max(16).required().external(validatePassword)
     }),
