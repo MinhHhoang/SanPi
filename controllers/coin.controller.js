@@ -4,6 +4,7 @@ exports.create = async (req, res) => {
  
   const object = {
     name: req.body.name,
+    image : req.body.image,
     sodu: req.body.sodu,
     address_pay: req.body.address_pay,
   };
@@ -21,6 +22,7 @@ exports.update = async (req, res) => {
 
   const object = {
     name: req.body.name,
+    image : req.body.image,
     sodu: req.body.sodu,
     address_pay: req.body.address_pay,
   };
