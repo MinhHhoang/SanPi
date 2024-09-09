@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('./connection');
+const Customers = require('../models/customer.model');
 
 const Bankings = sequelize.define('Bankings', {
     name_bank: {
@@ -19,4 +20,10 @@ const Bankings = sequelize.define('Bankings', {
         }
     }
 }); 
+
+
+// Thiết lập mối quan hệ
+Bankings.belongsTo(Customers, { foreignKey: 'customer_id' });
+Customers.hasMany(Bankings, { foreignKey: 'customer_id' });
+
 module.exports = Bankings;
