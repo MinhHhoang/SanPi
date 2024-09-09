@@ -5,6 +5,8 @@ exports.create = async (req, res) => {
   const object = {
     name: req.body.name,
     image : req.body.image,
+    giaban: req.body.giaban,
+    giamua: req.body.giamua,
     sodu: req.body.sodu,
     address_pay: req.body.address_pay,
   };
