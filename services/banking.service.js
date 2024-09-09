@@ -1,4 +1,5 @@
 const Model = require("../models/banking.model");
+const Customers = require("../models/customer.model");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
