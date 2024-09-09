@@ -12,6 +12,9 @@ exports.delete = (id) => {
 
 exports.findAllByCustomer = (idCustomer) => {
   return Model.findAll({
+    include: [{
+      model: Customers,
+    }],
     where: {
       customer_id: idCustomer,
     },

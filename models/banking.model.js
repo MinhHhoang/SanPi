@@ -3,7 +3,7 @@ const sequelize = require('./connection');
 
 const Bankings = sequelize.define('Bankings', {
     name_bank: {
-        type: DataTypes.INTEGER 
+        type: DataTypes.STRING 
     },
     stk: {
         type: DataTypes.INTEGER 
