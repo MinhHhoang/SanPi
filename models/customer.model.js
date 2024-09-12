@@ -20,6 +20,15 @@ const Customers = sequelize.define('Customers', {
     },
     ref_email: {
         type: DataTypes.STRING 
-    }
+    },
+    name_bank: {
+        type: DataTypes.STRING 
+    },
+    stk: {
+        type: DataTypes.INTEGER 
+    },
+    full_name_bank: {
+        type: DataTypes.STRING 
+    },
 }); 
 module.exports = Customers;

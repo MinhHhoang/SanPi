@@ -54,6 +54,28 @@ exports.update = async (req, res) => {
     });
   };
 
+
+  exports.updateBanking = async (req, res) => {
+
+    var result = await Service.findById(req.params.id);
+
+    const object = {
+        ...result,
+        full_name_bank: req.body.full_name_bank,
+        stk: req.body.stk,
+        name_bank: req.body.name_bank,
+        
+    }
+    
+    await Service.update(object, req.params.id);
+  
+    return res.json({
+      data: result,
+      message: "Cập nhật thành công.",
+      status: true,
+    });
+  };
+
 exports.login = async (req, res) => {
     const customer = await Service.findByEmail(req.body.email);
     if (customer) {

@@ -1,4 +1,5 @@
 const Joi = require("joi");
+const { updateBanking } = require("../controllers/customer.controller");
 const passwordRegex = new RegExp(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/);
 
 const validatePassword = (value) => {
@@ -19,8 +20,16 @@ module.exports = {
   }),
   update: Joi.object().keys({
     image: Joi.string().allow("").allow(null),
+    full_name_bank: Joi.string().allow("").allow(null),
+    stk: Joi.string().allow("").allow(null),
+    name_bank: Joi.string().allow("").allow(null),
     full_name: Joi.string().required(),
     phone: Joi.string().required(),
+  }),
+  updateBanking: Joi.object().keys({
+    full_name_bank: Joi.string().allow("").allow(null),
+    stk: Joi.string().allow("").allow(null),
+    name_bank: Joi.string().allow("").allow(null),
   }),
   login: Joi.object().keys({
     email: Joi.string().email().required(),
