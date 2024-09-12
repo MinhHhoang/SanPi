@@ -22,7 +22,7 @@ exports.findAll = (page, limit, query) => {
     limit: +limit,
     offset: skip,
     where: {
-      title: { [Op.like]: `%${query}%` },
+      name: { [Op.like]: `%${query}%` },
     },
   });
 };
@@ -30,7 +30,7 @@ exports.findAll = (page, limit, query) => {
 exports.getTotal = () => {
   return Model.count({
     where: {
-      title: { [Op.like]: `%${query}%` },
+      name: { [Op.like]: `%${query}%` },
     },
   });
 };
