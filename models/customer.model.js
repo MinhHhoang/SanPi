@@ -36,5 +36,11 @@ const Customers = sequelize.define('Customers', {
     full_name_bank: {
         type: DataTypes.STRING 
     },
+    wallet_pi: {
+        type: DataTypes.STRING 
+    },
+    wallet_sidra: {
+        type: DataTypes.STRING 
+    },
 }); 
 module.exports = Customers;
