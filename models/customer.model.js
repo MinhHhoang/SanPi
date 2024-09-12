@@ -21,6 +21,12 @@ const Customers = sequelize.define('Customers', {
     ref_email: {
         type: DataTypes.STRING 
     },
+    picoin: {
+        type: DataTypes.INTEGER 
+    },
+    sidracoin: {
+        type: DataTypes.INTEGER 
+    },
     name_bank: {
         type: DataTypes.STRING 
     },
