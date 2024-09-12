@@ -27,7 +27,7 @@ exports.findAll = (page, limit, query) => {
   });
 };
 
-exports.getTotal = () => {
+exports.getTotal = (query) => {
   return Model.count({
     where: {
       name: { [Op.like]: `%${query}%` },
