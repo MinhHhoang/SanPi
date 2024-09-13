@@ -58,6 +58,10 @@ router.put('/customer/:id', AuthGuard, validate(CustomerValidate.update), ErrorH
 router.put('/customer/banking/:id', AuthGuard, validate(CustomerValidate.updateBanking), ErrorHandler(CustomerController.updateBanking));
 
 
+router.put('/customer/walletpi/:id', AuthGuard, validate(CustomerValidate.update_wallet_pi), ErrorHandler(CustomerController.updateWalletPi));
+router.put('/customer/walletsidra/:id', AuthGuard, validate(CustomerValidate.update_wallet_sidra), ErrorHandler(CustomerController.updateWalletPi));
+
+
 
 
 router.all('*', (req, res) => res.status(400).json({ message: 'Bad Request.' }));

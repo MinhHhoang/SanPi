@@ -27,9 +27,16 @@ module.exports = {
     phone: Joi.string().required(),
   }),
   updateBanking: Joi.object().keys({
-    full_name_bank: Joi.string().allow("").allow(null),
-    stk: Joi.string().allow("").allow(null),
-    name_bank: Joi.string().allow("").allow(null),
+    full_name_bank: Joi.string().required(),
+    stk: Joi.string().required(),
+    name_bank: Joi.string().required(),
+  }),
+
+  update_wallet_pi: Joi.object().keys({
+    wallet_pi: Joi.string().required(),
+  }),
+  update_wallet_sidra: Joi.object().keys({
+    wallet_sidra: Joi.string().required(),
   }),
   login: Joi.object().keys({
     email: Joi.string().email().required(),
