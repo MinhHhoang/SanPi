@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('./connection');
 const { password } = require('../config/database.config');
+const Customers = require('../models/customer.model');
 
 const OrderCoins = sequelize.define('OrderCoins', {
     sku: {
