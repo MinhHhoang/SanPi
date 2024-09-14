@@ -38,3 +38,12 @@ exports.getTotal = (query) => {
 exports.findByID = (id) => {
   return Model.findByPk(id);
 };
+
+
+exports.findByCodeCoin = (code) => {
+  return Model.findOne({
+    where: {
+      code: code,
+    }
+  })
+}

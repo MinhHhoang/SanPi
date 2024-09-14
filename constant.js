@@ -4,7 +4,25 @@ const ROLEID = {
     EMPLOYEE: 'EMPLOYEE',
 };
 
+const STATUS_ORDER = {
+    IN_PROCESS: 'IN_PROCESS',
+    SUCCESS: 'SUCCESS',
+};
+
+const TYPE_COIN = {
+    PI_NETWORD: 'PI_NETWORD',
+    SIDRA: 'SIDRA',
+};
+
+const TYPE_ORDER = {
+    BUY: 'BUY',
+    SELL: 'SELL',
+};
+
 
 module.exports = {
-    ROLEID
+    ROLEID,
+    STATUS_ORDER,
+    TYPE_COIN,
+    TYPE_ORDER
 };

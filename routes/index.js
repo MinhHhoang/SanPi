@@ -10,12 +10,14 @@ const CustomerController = require('../controllers/customer.controller');
 const NewController = require('../controllers/new.controller');
 const GuidlineController = require('../controllers/guidline.controller');
 const CoinController = require('../controllers/coin.controller');
+const OrderCoinController = require('../controllers/order_coin.controller');
 
 const authValidate = require('../validatons/employee.validation');
 const CustomerValidate = require('../validatons/customer.validation');
 const NewValidate = require('../validatons/new.validation');
 const GuidlineValidate = require('../validatons/guidline.validation');
 const CoinValidate = require('../validatons/coin.validation');
+const OrderCoinValidate = require('../validatons/order_coin.validation');
 
 
 //Employee
@@ -61,7 +63,8 @@ router.put('/customer/banking/:id', AuthGuard, validate(CustomerValidate.updateB
 router.put('/customer/walletpi/:id', AuthGuard, validate(CustomerValidate.update_wallet_pi), ErrorHandler(CustomerController.updateWalletPi));
 router.put('/customer/walletsidra/:id', AuthGuard, validate(CustomerValidate.update_wallet_sidra), ErrorHandler(CustomerController.updateWalletPi));
 
-
+//Ordercoin
+router.post('/order/create/:id', AuthGuard, validate(OrderCoinValidate.create), ErrorHandler(OrderCoinController.create));
 
 
 router.all('*', (req, res) => res.status(400).json({ message: 'Bad Request.' }));
