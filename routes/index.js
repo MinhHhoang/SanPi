@@ -64,7 +64,8 @@ router.put('/customer/walletpi/:id', AuthGuard, validate(CustomerValidate.update
 router.put('/customer/walletsidra/:id', AuthGuard, validate(CustomerValidate.update_wallet_sidra), ErrorHandler(CustomerController.updateWalletPi));
 
 //Ordercoin
-router.post('/order/create/:id', AuthGuard, validate(OrderCoinValidate.create), ErrorHandler(OrderCoinController.create));
+router.post('/order/create', AuthGuard, validate(OrderCoinValidate.create), ErrorHandler(OrderCoinController.create));
+router.get('/order-coins', AuthGuard,  ErrorHandler(OrderCoinController.getCoinOrders));
 
 
 router.all('*', (req, res) => res.status(400).json({ message: 'Bad Request.' }));

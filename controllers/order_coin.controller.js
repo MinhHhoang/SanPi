@@ -6,6 +6,24 @@ const bcryptUtil = require("../utils/bcrypt.util");
 const jwtUtil = require("../utils/jwt.util");
 const { STATUS_ORDER, TYPE_COIN, TYPE_ORDER } = require("../constant");
 
+
+
+exports.getCoinOrders = async (req, res) => {
+
+  var page = req.query.page || 1;
+  var limit = req.query.limit || 10;
+
+  var ordercoins = await Service.findAll(page, limit, req.employeeCurrent.id);
+  var total = await Service.getTotal(req.employeeCurrent.id);
+
+  return res.status(200).json({
+      results: ordercoins.length,
+      total: total,
+      data: ordercoins,
+      status: true
+  });
+}
+
 exports.create = async (req, res) => {
   const object = {
     sku: generateSKU(),
@@ -20,25 +38,10 @@ exports.create = async (req, res) => {
     image_bill: req.body.image_bill,
     stk_name: req.body.stk_name,
     stk_bank: req.body.stk_bank,
-    customer_id: req.body.req.params.id,
+    customer_id: req.employeeCurrent.id,
   };
 
-  var customer = await ServiceCustomer.findById(req.params.id);
-
-  if (!customer) {
-    return res.status(400).json({
-      message: "Tài khoản không tìm thấy, vui lòng đăng nhập lại",
-      status: false,
-    });
-  }
-
-  if (customer.email !== req.employeeCurrent.email) {
-    return res.status(400).json({
-      message: "Lỗi hệ thông, thông tin không chính xác",
-      status: false,
-    });
-  }
-
+  
   if (
     object.type_coin !== TYPE_COIN.PI_NETWORD &&
     object.type_coin !== TYPE_COIN.SIDRA
