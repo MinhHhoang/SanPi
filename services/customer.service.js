@@ -21,6 +21,15 @@ exports.findByEmail = (email) => {
   })
 }
 
+
+exports.findByEmailRef = (email) => {
+  return Model.findOne({
+    where: {
+      ref_email: email,
+    }
+  })
+}
+
 exports.findById = (id) => {
   return Model.findByPk(id);
 }

@@ -5,6 +5,7 @@ const ROLEID = {
 };
 
 const STATUS_ORDER = {
+    CANCEL: 'CANCEL',
     IN_PROCESS: 'IN_PROCESS',
     SUCCESS: 'SUCCESS',
 };

@@ -36,6 +36,17 @@ exports.findAll = (page, limit, customer_id) => {
   });
 };
 
+exports.findAllAdmin = (page, limit, sku) => {
+  const skip = (page - 1) * limit;
+  return Model.findAll({
+    limit: +limit,
+    offset: skip,
+    where: {
+      sku: { [Op.like]: `%${sku}%` },
+    },
+  });
+};
+
 exports.getTotal = (customer_id) => {
   return Model.count({
     where: {
@@ -44,5 +55,12 @@ exports.getTotal = (customer_id) => {
   });
 };
 
+exports.getTotalAdmin = (sku) => {
+  return Model.count({
+    where: {
+      sku: { [Op.like]: `%${sku}%` },
+    },
+  });
+};
 
 

@@ -1,12 +1,69 @@
 const Service = require("../services/order_coin.service");
-const ServiceCustomer = require("../services/customer.service");
 const ServiceCoin = require("../services/coin.service");
-const jwtConfig = require("../config/jwt.config");
-const bcryptUtil = require("../utils/bcrypt.util");
-const jwtUtil = require("../utils/jwt.util");
+const ServiceCustomer = require("../services/customer.service");
 const { STATUS_ORDER, TYPE_COIN, TYPE_ORDER } = require("../constant");
 
 
+exports.submitOrder = async (req, res) => {
+
+  var order = await Service.findById(req.params.id);
+
+  if(!order 
+    || order.status !== STATUS_ORDER.IN_PROCESS) {
+    return res.status(400).json({
+      message: "Đơn hàng này không tồn tại hoặc đã được xử lý.",
+      status: false,
+    });
+  }
+
+  let customer = await ServiceCustomer.findById(order.customer_id);
+  let customer_ref = await ServiceCustomer.findByEmailRef(customer.ref_email);
+
+  if(order.type_order === TYPE_ORDER.BUY) {
+    if(order.type_coin === TYPE_COIN.PI_NETWORD) {
+      await ServiceCustomer.update({...customer, picoin : Number(customer.picoin) + Number(order.count_coin)})  
+    } else {
+      await ServiceCustomer.update({...customer, sidracoin : Number(customer.sidracoin) + Number(order.count_coin)})  
+    }
+  } 
+
+  if(customer_ref) {
+    if(order.type_coin === TYPE_COIN.PI_NETWORD) {
+      await ServiceCustomer.update({...customer_ref, picoin : Number(customer.picoin) + Number(order.count_coin) * 0.1})  
+    } else {
+      await ServiceCustomer.update({...customer_ref, sidracoin : Number(customer.sidracoin) + Number(order.count_coin) * 0.1})  
+    } 
+  }
+
+  order = await Service.update({...order,status : STATUS_ORDER.SUCCESS})
+
+  return res.status(200).json({
+      order: order,
+      message: "Đơn hàng đã hoàn thành.",
+      status: true
+  });
+}
+
+exports.cancelOrder = async (req, res) => {
+
+  var order = await Service.findById(req.params.id);
+
+  if(!order 
+    || order.status !== STATUS_ORDER.IN_PROCESS) {
+    return res.status(400).json({
+      message: "Đơn hàng này không tồn tại hoặc đã được xử lý.",
+      status: false,
+    });
+  }
+
+  order = await Service.update({...order,status : STATUS_ORDER.CANCEL})
+
+  return res.status(200).json({
+      order: order,
+      message: "Đơn hàng đã được hủy.",
+      status: true
+  });
+}
 
 exports.getCoinOrders = async (req, res) => {
 
@@ -15,6 +72,23 @@ exports.getCoinOrders = async (req, res) => {
 
   var ordercoins = await Service.findAll(page, limit, req.employeeCurrent.id);
   var total = await Service.getTotal(req.employeeCurrent.id);
+
+  return res.status(200).json({
+      results: ordercoins.length,
+      total: total,
+      data: ordercoins,
+      status: true
+  });
+}
+
+exports.getCoinOrdersAdmin = async (req, res) => {
+
+  var page = req.query.page || 1;
+  var limit = req.query.limit || 10;
+  var sku = req.query.sku || "";
+
+  var ordercoins = await Service.findAllAdmin(page, limit, sku);
+  var total = await Service.getTotalAdmin(sku);
 
   return res.status(200).json({
       results: ordercoins.length,
