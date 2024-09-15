@@ -61,7 +61,7 @@ router.put('/customer/banking/:id', AuthGuard, validate(CustomerValidate.updateB
 
 
 router.put('/customer/walletpi/:id', AuthGuard, validate(CustomerValidate.update_wallet_pi), ErrorHandler(CustomerController.updateWalletPi));
-router.put('/customer/walletsidra/:id', AuthGuard, validate(CustomerValidate.update_wallet_sidra), ErrorHandler(CustomerController.updateWalletPi));
+router.put('/customer/walletsidra/:id', AuthGuard, validate(CustomerValidate.update_wallet_sidra), ErrorHandler(CustomerController.updateWalletSidra));
 
 //Ordercoin
 router.post('/order/create', AuthGuard, validate(OrderCoinValidate.create), ErrorHandler(OrderCoinController.create));

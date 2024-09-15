@@ -18,7 +18,9 @@ module.exports = async (req, res, next) => {
             }
             
             const decoded = await jwtUtil.verifyToken(token);
-            req.employeeCurrent = decoded;
+
+            console.log(decoded)
+            req.employeeCurrent = decoded.dataValues;
 
             req.token = token;
             next();
