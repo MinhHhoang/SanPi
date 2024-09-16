@@ -146,13 +146,15 @@ exports.create = async (req, res) => {
   }
 
   if (object.type_order === TYPE_ORDER.BUY) {
-    if (coin.giaban !== object.price_coin_current) {
+    console.log(Number(coin.giaban))
+    console.log(Number(object.price_coin_current))
+    if (Number(coin.giaban) !== Number(object.price_coin_current)) {
       return res.status(400).json({
         message: "Thông tin giá không hợp lệ .",
         status: false,
       });
     }
-    const totalMoney = object.count_coin * coin.giaban;
+    const totalMoney = Number(object.count_coin) * Number(coin.giaban);
 
     if (totalMoney !== object.total_money) {
       return res.status(400).json({
