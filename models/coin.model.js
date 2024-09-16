@@ -5,6 +5,9 @@ const Coins = sequelize.define('Coins', {
     name: {
         type: DataTypes.STRING
     },
+    code: {
+        type: DataTypes.STRING
+    },
     image: {
         type: DataTypes.STRING
     },
