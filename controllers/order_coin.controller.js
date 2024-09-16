@@ -99,7 +99,7 @@ exports.getCoinOrdersAdmin = async (req, res) => {
 }
 
 exports.create = async (req, res) => {
-  const object = {
+  let object = {
     sku: generateSKU(),
     status_order: STATUS_ORDER.IN_PROCESS,
     type_order: req.body.type_order,
