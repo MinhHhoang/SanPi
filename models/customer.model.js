@@ -31,7 +31,7 @@ const Customers = sequelize.define('Customers', {
         type: DataTypes.STRING 
     },
     stk: {
-        type: DataTypes.INTEGER 
+        type: DataTypes.STRING 
     },
     full_name_bank: {
         type: DataTypes.STRING 

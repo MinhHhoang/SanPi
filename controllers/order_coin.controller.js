@@ -136,7 +136,7 @@ exports.create = async (req, res) => {
     });
   }
 
-  const coin = ServiceCoin.findByCodeCoin(object.type_coin);
+  const coin = await ServiceCoin.findByCodeCoin(object.type_coin);
 
   if (object.count_coin < 5) {
     return res.status(400).json({
