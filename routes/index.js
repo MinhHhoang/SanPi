@@ -11,6 +11,7 @@ const NewController = require('../controllers/new.controller');
 const GuidlineController = require('../controllers/guidline.controller');
 const CoinController = require('../controllers/coin.controller');
 const OrderCoinController = require('../controllers/order_coin.controller');
+const ContactController = require('../controllers/contact.controller');
 
 const authValidate = require('../validatons/employee.validation');
 const CustomerValidate = require('../validatons/customer.validation');
@@ -18,6 +19,7 @@ const NewValidate = require('../validatons/new.validation');
 const GuidlineValidate = require('../validatons/guidline.validation');
 const CoinValidate = require('../validatons/coin.validation');
 const OrderCoinValidate = require('../validatons/order_coin.validation');
+const ContactValidate = require('../validatons/contact.validation');
 
 
 //Employee
@@ -33,14 +35,21 @@ router.post('/new/create', AuthGuard, validate(NewValidate.create), ErrorHandler
 router.put('/new/:id', AuthGuard, validate(NewValidate.create), ErrorHandler(NewController.update));
 router.delete('/new/:id', AuthGuard, ErrorHandler(NewController.delete));
 router.get('/new', ErrorHandler(NewController.getObjects));
-router.get('/news', ErrorHandler(NewController.getObjectById));
+router.get('/new/:id', ErrorHandler(NewController.getObjectById));
+
+
+//Contact
+router.post('/contact/create', validate(ContactValidate.create), ErrorHandler(ContactController.create));
+router.put('/submitcontact/:id', AuthGuard, validate(NewValidate.create), ErrorHandler(ContactController.submitContact));
+router.get('/contact', ErrorHandler(ContactController.getObjects));
+router.get('/contact/:id', ErrorHandler(NewController.getObjectById));
 
 //Guidline
 router.post('/guidline/create', AuthGuard, validate(GuidlineValidate.create), ErrorHandler(GuidlineController.create));
 router.put('/guidline/:id', AuthGuard, validate(GuidlineValidate.create), ErrorHandler(GuidlineController.update));
 router.delete('/guidline/:id', AuthGuard, ErrorHandler(GuidlineController.delete));
 router.get('/guidline', ErrorHandler(GuidlineController.getObjects));
-router.get('/guidline', ErrorHandler(GuidlineController.getObjectById));
+router.get('/guidline/:id', ErrorHandler(GuidlineController.getObjectById));
 
 //Coin
 router.post('/coin/create', AuthGuard, validate(CoinValidate.create), ErrorHandler(CoinController.create));

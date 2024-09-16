@@ -20,10 +20,16 @@ const TYPE_ORDER = {
     SELL: 'SELL',
 };
 
+const STATUS_CONTACT = {
+    CANCEL: 'CANCEL',
+    IN_PROCESS: 'IN_PROCESS',
+};
+
 
 module.exports = {
     ROLEID,
     STATUS_ORDER,
     TYPE_COIN,
-    TYPE_ORDER
+    TYPE_ORDER,
+    STATUS_CONTACT
 };
