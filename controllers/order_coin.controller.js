@@ -167,10 +167,8 @@ exports.create = async (req, res) => {
     if (
       object.image_bill === "" ||
       object.image_bill === undefined ||
-      object.image_bill === null ||
       object.wallet_coin === undefined ||
-      object.wallet_coin === "" ||
-      object.wallet_coin === null
+      object.wallet_coin === "" 
     ) {
       return res.status(400).json({
         message: "Bill image là bắt buộc .",
@@ -222,13 +220,10 @@ exports.create = async (req, res) => {
     if (
       object.stk === "" ||
       object.stk === undefined ||
-      object.stk === null ||
       object.stk_bank === undefined ||
       object.stk_bank === "" ||
-      object.stk_bank === null ||
       object.stk_name === undefined ||
-      object.stk_name === "" ||
-      object.stk_name === null
+      object.stk_name === "" 
     ) {
       return res.status(400).json({
         message: "Thông tin ngân hàng là bắt buộc .",
