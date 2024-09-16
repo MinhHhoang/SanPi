@@ -12,6 +12,7 @@ module.exports = {
     total_money :Joi.number().allow(null),
     count_coin :Joi.number().allow(null),
     wallet_coin :Joi.string().allow("").allow(null),
+    image_bill :Joi.string().allow("").allow(null),
   }),
 };
 
