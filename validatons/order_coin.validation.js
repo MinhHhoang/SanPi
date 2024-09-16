@@ -10,6 +10,7 @@ module.exports = {
     stk_bank :Joi.string().allow("").allow(null),
     stk_name :Joi.string().allow("").allow(null),
     total_money :Joi.number().allow(null),
+    count_coin :Joi.number().allow(null),
     wallet_coin :Joi.string().allow("").allow(null),
   }),
 };
