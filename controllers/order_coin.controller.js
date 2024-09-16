@@ -164,12 +164,7 @@ exports.create = async (req, res) => {
       });
     }
 
-    if (
-      object.image_bill === "" ||
-      object.image_bill === undefined ||
-      object.wallet_coin === undefined ||
-      object.wallet_coin === "" 
-    ) {
+    if (!object.image_bill || !object.wallet_coin) {
       return res.status(400).json({
         message: "Bill image là bắt buộc .",
         status: false,
@@ -217,14 +212,7 @@ exports.create = async (req, res) => {
       });
     }
 
-    if (
-      object.stk === "" ||
-      object.stk === undefined ||
-      object.stk_bank === undefined ||
-      object.stk_bank === "" ||
-      object.stk_name === undefined ||
-      object.stk_name === "" 
-    ) {
+    if (!object.stk || !object.stk_bank || !object.stk_name) {
       return res.status(400).json({
         message: "Thông tin ngân hàng là bắt buộc .",
         status: false,
