@@ -75,7 +75,7 @@ router.put('/customer/walletsidra/:id', AuthGuard, validate(CustomerValidate.upd
 //Ordercoin
 router.post('/order/create', AuthGuard, validate(OrderCoinValidate.create), ErrorHandler(OrderCoinController.create));
 router.get('/order-coins', AuthGuard,  ErrorHandler(OrderCoinController.getCoinOrders));
-router.get('/admin/order-coins', AuthGuard,  ErrorHandler(OrderCoinController.getCoinOrders));
+router.get('/admin/order-coins', AuthGuard,  ErrorHandler(OrderCoinController.getCoinOrdersAdmin));
 router.put('/order-coins/cancel/:id', AuthGuard,  ErrorHandler(OrderCoinController.cancelOrder));
 router.put('/order-coins/submit/:id', AuthGuard,  ErrorHandler(OrderCoinController.submitOrder));
 

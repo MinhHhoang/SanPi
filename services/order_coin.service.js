@@ -1,11 +1,12 @@
-const Model = require('../models/order_coin.model');
-const cacheUtil = require('../utils/cache.util');
-const Sequelize = require('sequelize');
+const Customers = require("../models/customer.model");
+const Model = require("../models/order_coin.model");
+const cacheUtil = require("../utils/cache.util");
+const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
 exports.create = (object) => {
   return Model.create(object);
-}
+};
 
 exports.update = (object, id) => {
   return Model.update(object, {
@@ -17,13 +18,13 @@ exports.findBySku = (sku) => {
   return Model.findOne({
     where: {
       sku: sku,
-    }
-  })
-}
+    },
+  });
+};
 
 exports.findById = (id) => {
   return Model.findByPk(id);
-}
+};
 
 exports.findAll = (page, limit, customer_id) => {
   const skip = (page - 1) * limit;
@@ -44,6 +45,9 @@ exports.findAllAdmin = (page, limit, sku) => {
     where: {
       sku: { [Op.like]: `%${sku}%` },
     },
+    include: [{
+      model: Customers, // Model Sequelize đại diện cho bảng Customer
+    }],
   });
 };
 
@@ -62,5 +66,3 @@ exports.getTotalAdmin = (sku) => {
     },
   });
 };
-
-
