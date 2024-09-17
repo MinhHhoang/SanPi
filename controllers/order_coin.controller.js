@@ -69,9 +69,10 @@ exports.getCoinOrders = async (req, res) => {
 
   var page = req.query.page || 1;
   var limit = req.query.limit || 10;
+  var type = req.query.type || "BUY";
 
-  var ordercoins = await Service.findAll(page, limit, req.employeeCurrent.id);
-  var total = await Service.getTotal(req.employeeCurrent.id);
+  var ordercoins = await Service.findAll(page, limit, req.employeeCurrent.id,type);
+  var total = await Service.getTotal(req.employeeCurrent.id, type);
 
   return res.status(200).json({
       results: ordercoins.length,
@@ -86,9 +87,10 @@ exports.getCoinOrdersAdmin = async (req, res) => {
   var page = req.query.page || 1;
   var limit = req.query.limit || 10;
   var sku = req.query.sku || "";
+  var type = req.query.type || "BUY";
 
-  var ordercoins = await Service.findAllAdmin(page, limit, sku);
-  var total = await Service.getTotalAdmin(sku);
+  var ordercoins = await Service.findAllAdmin(page, limit, sku, type);
+  var total = await Service.getTotalAdmin(sku, type);
 
   return res.status(200).json({
       results: ordercoins.length,
