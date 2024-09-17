@@ -9,7 +9,7 @@ exports.submitOrder = async (req, res) => {
   var order = await Service.findById(req.params.id);
 
   if(!order 
-    || order.status !== STATUS_ORDER.IN_PROCESS) {
+    || order.status_order !== STATUS_ORDER.IN_PROCESS) {
     return res.status(400).json({
       message: "Đơn hàng này không tồn tại hoặc đã được xử lý.",
       status: false,
@@ -21,21 +21,21 @@ exports.submitOrder = async (req, res) => {
 
   if(order.type_order === TYPE_ORDER.BUY) {
     if(order.type_coin === TYPE_COIN.PI_NETWORD) {
-      await ServiceCustomer.update({...customer, picoin : Number(customer.picoin) + Number(order.count_coin)})  
+      await ServiceCustomer.update({...customer, picoin : Number(customer.picoin) + Number(order.count_coin)},customer.id)  
     } else {
-      await ServiceCustomer.update({...customer, sidracoin : Number(customer.sidracoin) + Number(order.count_coin)})  
+      await ServiceCustomer.update({...customer, sidracoin : Number(customer.sidracoin) + Number(order.count_coin)},customer.id)  
     }
   } 
 
   if(customer_ref) {
     if(order.type_coin === TYPE_COIN.PI_NETWORD) {
-      await ServiceCustomer.update({...customer_ref, picoin : Number(customer.picoin) + Number(order.count_coin) * 0.1})  
+      await ServiceCustomer.update({...customer_ref, picoin : Number(customer.picoin) + Number(order.count_coin) * 0.1},customer_ref.id)  
     } else {
-      await ServiceCustomer.update({...customer_ref, sidracoin : Number(customer.sidracoin) + Number(order.count_coin) * 0.1})  
+      await ServiceCustomer.update({...customer_ref, sidracoin : Number(customer.sidracoin) + Number(order.count_coin) * 0.1},customer_ref.id)  
     } 
   }
 
-  order = await Service.update({...order,status : STATUS_ORDER.SUCCESS})
+  order = await Service.update({...order, status_order : STATUS_ORDER.SUCCESS}, order.id)
 
   return res.status(200).json({
       order: order,
@@ -49,14 +49,14 @@ exports.cancelOrder = async (req, res) => {
   var order = await Service.findById(req.params.id);
 
   if(!order 
-    || order.status !== STATUS_ORDER.IN_PROCESS) {
+    || order.status_order !== STATUS_ORDER.IN_PROCESS) {
     return res.status(400).json({
       message: "Đơn hàng này không tồn tại hoặc đã được xử lý.",
       status: false,
     });
   }
 
-  order = await Service.update({...order,status : STATUS_ORDER.CANCEL})
+  order = await Service.update({...order,status_order : STATUS_ORDER.CANCEL},order.id)
 
   return res.status(200).json({
       order: order,
