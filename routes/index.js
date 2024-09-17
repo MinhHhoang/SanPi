@@ -40,7 +40,7 @@ router.get('/new/:id', ErrorHandler(NewController.getObjectById));
 
 //Contact
 router.post('/contact/create', validate(ContactValidate.create), ErrorHandler(ContactController.create));
-router.put('/submitcontact/:id', AuthGuard, validate(NewValidate.create), ErrorHandler(ContactController.submitContact));
+router.put('/submitcontact/:id', AuthGuard, ErrorHandler(ContactController.submitContact));
 router.get('/contact', ErrorHandler(ContactController.getObjects));
 router.get('/contact/:id', ErrorHandler(NewController.getObjectById));
 

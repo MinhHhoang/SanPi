@@ -8,6 +8,7 @@ exports.create = async (req, res) => {
     email: req.body.email,
     sdt: req.body.sdt,
     content: req.body.content,
+    status: STATUS_CONTACT.IN_PROCESS
   };
 
   const result = await Service.create(object);
