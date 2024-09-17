@@ -78,7 +78,7 @@ exports.updateBanking = async (req, res) => {
     await Service.update(object, req.params.id);
 
     return res.json({
-        data: result,
+        data: object,
         message: "Cập nhật thành công.",
         status: true,
     });
