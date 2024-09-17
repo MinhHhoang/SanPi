@@ -48,7 +48,7 @@ exports.update = async (req, res) => {
     await Service.update(object, req.params.id);
 
     return res.json({
-        data: result,
+        data: object,
         message: "Cập nhật thành công.",
         status: true,
     });
@@ -105,7 +105,7 @@ exports.updateWalletPi = async (req, res) => {
     await Service.update(object, req.params.id);
 
     return res.json({
-        data: result,
+        data: object,
         message: "Cập nhật thành công.",
         status: true,
     });
@@ -132,7 +132,7 @@ exports.updateWalletSidra = async (req, res) => {
     await Service.update(object, req.params.id);
 
     return res.json({
-        data: result,
+        data: object,
         message: "Cập nhật thành công.",
         status: true,
     });
@@ -206,7 +206,7 @@ exports.changePassword = async (req, res) => {
     customer = await Service.findByEmail(req.body.email);
 
     return res.json({
-        data: customer,
+        data: object,
         message: "Đổi mật khẩu thành công.",
         status: true,
     });
