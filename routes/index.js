@@ -12,6 +12,7 @@ const GuidlineController = require('../controllers/guidline.controller');
 const CoinController = require('../controllers/coin.controller');
 const OrderCoinController = require('../controllers/order_coin.controller');
 const ContactController = require('../controllers/contact.controller');
+const SettingController = require('../controllers/setting.controller');
 
 const authValidate = require('../validatons/employee.validation');
 const CustomerValidate = require('../validatons/customer.validation');
@@ -78,6 +79,10 @@ router.get('/order-coins', AuthGuard,  ErrorHandler(OrderCoinController.getCoinO
 router.get('/admin/order-coins', AuthGuard,  ErrorHandler(OrderCoinController.getCoinOrdersAdmin));
 router.put('/order-coins/cancel/:id', AuthGuard,  ErrorHandler(OrderCoinController.cancelOrder));
 router.put('/order-coins/submit/:id', AuthGuard,  ErrorHandler(OrderCoinController.submitOrder));
+
+//Setting
+router.get('/setting', ErrorHandler(SettingController.getObjectById));
+router.put('/setting', AuthGuard,  ErrorHandler(SettingController.update));
 
 
 router.all('*', (req, res) => res.status(400).json({ message: 'Bad Request.' }));
