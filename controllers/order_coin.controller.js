@@ -61,7 +61,7 @@ exports.submitOrder = async (req, res) => {
   }
 
   order = await Service.update({...order, status_order : STATUS_ORDER.SUCCESS}, order.id)
-  await sendMessage('Có đơn hàng cần xử lý');
+  
   return res.status(200).json({
       order: order,
       message: "Đơn hàng đã hoàn thành.",
@@ -256,6 +256,8 @@ exports.create = async (req, res) => {
 
 
   const order_coin = await Service.create(object);
+
+  await sendMessage('Có đơn hàng cần xử lý');
 
   return res.json({
     order_coin : order_coin,
