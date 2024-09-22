@@ -1,5 +1,6 @@
 const Service = require("../services/order_coin.service");
 const ServiceCoin = require("../services/coin.service");
+const ServiceSetting = require("../services/setting.service");
 const ServiceCustomer = require("../services/customer.service");
 const { STATUS_ORDER, TYPE_COIN, TYPE_ORDER } = require("../constant");
 const fetch = require("node-fetch");
@@ -31,6 +32,8 @@ async function sendMessage(message) {
 
 exports.submitOrder = async (req, res) => {
 
+  var setting = await ServiceSetting.findOne();
+
   var order = await Service.findById(req.params.id);
 
   if(!order 
@@ -46,11 +49,17 @@ exports.submitOrder = async (req, res) => {
 
   if(order.type_order === TYPE_ORDER.BUY) {
     if(order.type_coin === TYPE_COIN.PI_NETWORD) {
-      await ServiceCustomer.update({...customer, picoin : Number(customer.picoin) + Number(order.count_coin)},customer.id)  
+      await ServiceCustomer.update({...customer, picoin : Number(customer.picoin) + Number(order.count_coin)  - Number(order.count_coin) * setting.fee_order },customer.id) 
     } else {
-      await ServiceCustomer.update({...customer, sidracoin : Number(customer.sidracoin) + Number(order.count_coin)},customer.id)  
+      await ServiceCustomer.update({...customer, sidracoin : Number(customer.sidracoin) + Number(order.count_coin) - Number(order.count_coin) * setting.fee_order},customer.id)  
     }
-  } 
+  } else {
+    if(order.type_coin === TYPE_COIN.PI_NETWORD) {
+      await ServiceCustomer.update({...customer, picoin : Number(customer.picoin) - Number(order.count_coin)  - Number(order.count_coin) * setting.fee_order },customer.id) 
+    } else {
+      await ServiceCustomer.update({...customer, sidracoin : Number(customer.sidracoin) - Number(order.count_coin) - Number(order.count_coin) * setting.fee_order},customer.id)  
+    }
+  }
 
   if(customer_ref) {
     if(order.type_coin === TYPE_COIN.PI_NETWORD) {
@@ -257,7 +266,24 @@ exports.create = async (req, res) => {
 
   const order_coin = await Service.create(object);
 
-  await sendMessage('Có đơn hàng cần xử lý');
+
+  let notificationMessage = `
+  SKU: ${object.sku}
+  Status: ${object.status_order}
+  Order Type: ${object.type_order}
+  Coin Type: ${object.type_coin}
+  Wallet: ${object.wallet_coin}
+  Current Price: ${object.price_coin_current}
+  Coin Count: ${object.count_coin}
+  Total Money: ${object.total_money}
+  STK: ${object.stk}
+  Bill Image: ${object.image_bill}
+  STK Name: ${object.stk_name}
+  STK Bank: ${object.stk_bank}
+  Customer ID: ${object.customer_id}
+`;
+
+  await sendMessage(notificationMessage);
 
   return res.json({
     order_coin : order_coin,
