@@ -21,10 +21,6 @@ exports.update = async (req, res) => {
   });
 };
 
-
-
-
-
 exports.getObjectById = async (req, res) => {
   var object = await Service.findOne();
   return res.status(200).json({

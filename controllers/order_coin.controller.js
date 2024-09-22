@@ -49,15 +49,15 @@ exports.submitOrder = async (req, res) => {
 
   if(order.type_order === TYPE_ORDER.BUY) {
     if(order.type_coin === TYPE_COIN.PI_NETWORD) {
-      await ServiceCustomer.update({...customer, picoin : Number(customer.picoin) + Number(order.count_coin)  - Number(order.count_coin) * setting.fee_order },customer.id) 
+      await ServiceCustomer.update({...customer, picoin : Number(customer.picoin) + Number(order.count_coin)  - Number(order.count_coin) * setting.fee_order/100 },customer.id) 
     } else {
-      await ServiceCustomer.update({...customer, sidracoin : Number(customer.sidracoin) + Number(order.count_coin) - Number(order.count_coin) * setting.fee_order},customer.id)  
+      await ServiceCustomer.update({...customer, sidracoin : Number(customer.sidracoin) + Number(order.count_coin) - Number(order.count_coin) * setting.fee_order/100},customer.id)  
     }
   } else {
     if(order.type_coin === TYPE_COIN.PI_NETWORD) {
-      await ServiceCustomer.update({...customer, picoin : Number(customer.picoin) - Number(order.count_coin)  - Number(order.count_coin) * setting.fee_order },customer.id) 
+      await ServiceCustomer.update({...customer, picoin : Number(customer.picoin) - Number(order.count_coin)  - Number(order.count_coin) * setting.fee_order/100 },customer.id) 
     } else {
-      await ServiceCustomer.update({...customer, sidracoin : Number(customer.sidracoin) - Number(order.count_coin) - Number(order.count_coin) * setting.fee_order},customer.id)  
+      await ServiceCustomer.update({...customer, sidracoin : Number(customer.sidracoin) - Number(order.count_coin) - Number(order.count_coin) * setting.fee_order/100},customer.id)  
     }
   }
 
