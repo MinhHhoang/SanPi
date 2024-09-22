@@ -4,7 +4,7 @@ const ServiceSetting = require("../services/setting.service");
 const ServiceCustomer = require("../services/customer.service");
 const { STATUS_ORDER, TYPE_COIN, TYPE_ORDER } = require("../constant");
 const fetch = require("node-fetch");
-
+//toke
 const TOKEN = '8128798044:AAF_foubtdZ3fgISd9USDPU6GPgVhFHzhNM';
 
 async function sendMessage(message) {
