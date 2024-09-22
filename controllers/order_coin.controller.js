@@ -2,6 +2,31 @@ const Service = require("../services/order_coin.service");
 const ServiceCoin = require("../services/coin.service");
 const ServiceCustomer = require("../services/customer.service");
 const { STATUS_ORDER, TYPE_COIN, TYPE_ORDER } = require("../constant");
+const fetch = require("node-fetch");
+
+const TOKEN = '8128798044:AAF_foubtdZ3fgISd9USDPU6GPgVhFHzhNM';
+
+async function sendMessage(message) {
+  const url = `https://api.telegram.org/bot${TOKEN}/sendMessage`;
+
+  const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          chat_id: 7147877943,
+          text: message,
+      }),
+  });
+
+  const data = await response.json();
+  if (data.ok) {
+      console.log('Message sent successfully:', data.result);
+  } else {
+      console.error('Error sending message:', data.description);
+  }
+}
 
 
 exports.submitOrder = async (req, res) => {
@@ -36,7 +61,7 @@ exports.submitOrder = async (req, res) => {
   }
 
   order = await Service.update({...order, status_order : STATUS_ORDER.SUCCESS}, order.id)
-
+  await sendMessage('Có đơn hàng cần xử lý');
   return res.status(200).json({
       order: order,
       message: "Đơn hàng đã hoàn thành.",
