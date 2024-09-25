@@ -116,6 +116,17 @@ exports.getCoinOrders = async (req, res) => {
   });
 }
 
+
+exports.searchOrder = async (req, res) => {
+  var sku = req.query.sku;
+  var order = await Service.findBySku(sku);
+  return res.status(200).json({
+    order: order,
+    status: true
+  });
+}
+
+
 exports.getCoinOrdersAdmin = async (req, res) => {
 
   var page = req.query.page || 1;
