@@ -18,6 +18,7 @@ const TYPE_COIN = {
 const TYPE_ORDER = {
     BUY: 'BUY',
     SELL: 'SELL',
+    SELL_HOT: 'SELL_HOT',
 };
 
 const STATUS_CONTACT = {
