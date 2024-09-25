@@ -3,12 +3,7 @@ const Service = require("../services/setting.service");
 exports.update = async (req, res) => {
   const object = {
     fee_order: req.body.fee_order,
-    momo_pay: req.body.momo_pay,
-    banking1: req.body.banking1,
-    banking2: req.body.banking2,
-    icon_banking1: req.body.icon_banking1,
-    icon_banking2: req.body.icon_banking2,
-    icon_momo: req.body.icon_momo,
+    payments: req.body.payments,
   };
 
   var result = await Service.update(object, 1);
