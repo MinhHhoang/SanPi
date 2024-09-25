@@ -79,6 +79,7 @@ router.get('/order-coins', AuthGuard,  ErrorHandler(OrderCoinController.getCoinO
 router.get('/admin/order-coins', AuthGuard,  ErrorHandler(OrderCoinController.getCoinOrdersAdmin));
 router.put('/order-coins/cancel/:id', AuthGuard,  ErrorHandler(OrderCoinController.cancelOrder));
 router.put('/order-coins/submit/:id', AuthGuard,  ErrorHandler(OrderCoinController.submitOrder));
+router.put('/order-coins/search',  ErrorHandler(OrderCoinController.searchOrder));
 
 //Setting
 router.get('/setting', ErrorHandler(SettingController.getObjectById));
