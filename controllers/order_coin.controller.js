@@ -271,7 +271,7 @@ exports.create = async (req, res) => {
     //   });
     // }
 
-    if (!object.image_bill || !object.wallet_coin) {
+    if (!object.image_bill) {
       return res.status(400).json({
         message: "Bill image là bắt buộc .",
         status: false,

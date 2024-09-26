@@ -16,7 +16,7 @@ module.exports = {
     full_name: Joi.string().required(),
     phone: Joi.string().required(),
     ref_email: Joi.string().email().allow(null, "").optional(),
-    password: Joi.string().min(8).max(16).required().external(validatePassword),
+    password: Joi.string().min(8).max(16).required(),
   }),
   update: Joi.object().keys({
     image: Joi.string().allow("").allow(null),
