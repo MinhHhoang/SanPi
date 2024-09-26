@@ -26,7 +26,7 @@ exports.findById = (id) => {
   return Model.findByPk(id);
 };
 
-exports.findAll = (page, limit, customer_id,type) => {
+exports.findAll = (page, limit, customer_id, type, sku) => {
   const skip = (page - 1) * limit;
   return Model.findAll({
     limit: +limit,
@@ -34,6 +34,7 @@ exports.findAll = (page, limit, customer_id,type) => {
     where: {
       customer_id: customer_id,
       type_order: type,
+      sku: { [Op.like]: `%${sku}%` },
     },
   });
 };
@@ -47,9 +48,11 @@ exports.findAllAdmin = (page, limit, sku, type) => {
       sku: { [Op.like]: `%${sku}%` },
       type_order: type,
     },
-    include: [{
-      model: Customers, // Model Sequelize đại diện cho bảng Customer
-    }],
+    include: [
+      {
+        model: Customers, // Model Sequelize đại diện cho bảng Customer
+      },
+    ],
   });
 };
 

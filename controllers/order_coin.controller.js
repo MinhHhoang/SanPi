@@ -155,12 +155,14 @@ exports.getCoinOrders = async (req, res) => {
   var page = req.query.page || 1;
   var limit = req.query.limit || 10;
   var type = req.query.type || "BUY";
+  var sku = req.query.sku;
 
   var ordercoins = await Service.findAll(
     page,
     limit,
     req.employeeCurrent.id,
-    type
+    type,
+    sku
   );
   var total = await Service.getTotal(req.employeeCurrent.id, type);
 
