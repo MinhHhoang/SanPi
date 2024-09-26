@@ -101,7 +101,7 @@ exports.submitOrder = async (req, res) => {
       await ServiceCustomer.update(
         {
           ...customer_ref,
-          picoin: Number(customer.picoin) + Number(order.count_coin) * 0.1,
+          picoin: Number(customer.picoin) + Number(order.count_coin) * setting.fee_order/200,
         },
         customer_ref.id
       );
@@ -110,7 +110,7 @@ exports.submitOrder = async (req, res) => {
         {
           ...customer_ref,
           sidracoin:
-            Number(customer.sidracoin) + Number(order.count_coin) * 0.1,
+            Number(customer.sidracoin) + Number(order.count_coin) * setting.fee_order/200,
         },
         customer_ref.id
       );
