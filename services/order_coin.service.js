@@ -65,6 +65,15 @@ exports.getTotal = (customer_id, type) => {
   });
 };
 
+exports.getTotalInProcess = (customer_id) => {
+  return Model.count({
+    where: {
+      customer_id: customer_id,
+      status_order: 'IN_PROCESS',
+    },
+  });
+};
+
 exports.getTotalAdmin = (sku, type) => {
   return Model.count({
     where: {

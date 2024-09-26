@@ -217,6 +217,15 @@ exports.create = async (req, res) => {
     customer_id: req.employeeCurrent.id,
   };
 
+  var totalInprocess = await Service.getTotalInProcess(req.employeeCurrent.id);
+
+  if (totalInprocess > 2) {
+    return res.status(400).json({
+      message: "Không thể tạo đơn, các đơn trước chưa được xử lý, vui lòng chờ",
+      status: false,
+    });
+  }
+
   if (![TYPE_COIN.PI_NETWORD, TYPE_COIN.SIDRA].includes(object.type_coin)) {
     return res.status(400).json({
       message: "Chúng tôi hiện tại không support đồng coin này.",
