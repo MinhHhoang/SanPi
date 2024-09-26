@@ -229,7 +229,7 @@ exports.create = async (req, res) => {
     });
   }
 
-  var setting = await ServiceSetting.findOne();
+  var setting = (await ServiceSetting.findOne()).toJSON();
 
   if (![TYPE_COIN.PI_NETWORD, TYPE_COIN.SIDRA].includes(object.type_coin)) {
     return res.status(400).json({
@@ -269,7 +269,7 @@ exports.create = async (req, res) => {
     }
 
     const totalMoney = Number(object.count_coin) * Number(coin.giaban);
-    const fee = totalMoney * setting.fee_order;
+    const fee = (totalMoney * setting.fee_order) / 100;
     if (totalMoney + fee !== object.total_money) {
       return res.status(400).json({
         message: "Tổng số tiền không hợp lệ .",
@@ -317,7 +317,7 @@ exports.create = async (req, res) => {
     }
 
     const totalMoney = object.count_coin * coin.giamua;
-    const fee = totalMoney * setting.fee_order;
+    const fee = (totalMoney * setting.fee_order) / 100;
     if (totalMoney - fee !== object.total_money) {
       return res.status(400).json({
         message: "Tổng số tiền không hợp lệ .",
