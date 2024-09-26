@@ -174,7 +174,6 @@ exports.getCoinOrders = async (req, res) => {
 
 exports.searchOrder = async (req, res) => {
   var sku = req.query.sku;
-  console.log("111111111111", sku);
   var order = await Service.findBySku(sku);
   return res.status(200).json({
     order: order,
