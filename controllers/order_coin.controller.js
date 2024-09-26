@@ -101,7 +101,9 @@ exports.submitOrder = async (req, res) => {
       await ServiceCustomer.update(
         {
           ...customer_ref,
-          picoin: Number(customer.picoin) + Number(order.count_coin) * setting.fee_order/200,
+          picoin:
+            Number(customer.picoin) +
+            (Number(order.count_coin) * setting.fee_order) / 200,
         },
         customer_ref.id
       );
@@ -110,7 +112,8 @@ exports.submitOrder = async (req, res) => {
         {
           ...customer_ref,
           sidracoin:
-            Number(customer.sidracoin) + Number(order.count_coin) * setting.fee_order/200,
+            Number(customer.sidracoin) +
+            (Number(order.count_coin) * setting.fee_order) / 200,
         },
         customer_ref.id
       );
@@ -226,6 +229,8 @@ exports.create = async (req, res) => {
     });
   }
 
+  var setting = await ServiceSetting.findOne();
+
   if (![TYPE_COIN.PI_NETWORD, TYPE_COIN.SIDRA].includes(object.type_coin)) {
     return res.status(400).json({
       message: "Chúng tôi hiện tại không support đồng coin này.",
@@ -263,13 +268,14 @@ exports.create = async (req, res) => {
       });
     }
 
-    // const totalMoney = Number(object.count_coin) * Number(coin.giaban);
-    // if (totalMoney !== object.total_money) {
-    //   return res.status(400).json({
-    //     message: "Tổng số tiền không hợp lệ .",
-    //     status: false,
-    //   });
-    // }
+    const totalMoney = Number(object.count_coin) * Number(coin.giaban);
+    const fee = totalMoney * setting.fee_order;
+    if (totalMoney + fee !== object.total_money) {
+      return res.status(400).json({
+        message: "Tổng số tiền không hợp lệ .",
+        status: false,
+      });
+    }
 
     if (!object.image_bill) {
       return res.status(400).json({
@@ -310,13 +316,14 @@ exports.create = async (req, res) => {
       }
     }
 
-    // const totalMoney = object.count_coin * coin.giamua;
-    // if (totalMoney !== object.total_money) {
-    //   return res.status(400).json({
-    //     message: "Tổng số tiền không hợp lệ .",
-    //     status: false,
-    //   });
-    // }
+    const totalMoney = object.count_coin * coin.giamua;
+    const fee = totalMoney * setting.fee_order;
+    if (totalMoney - fee !== object.total_money) {
+      return res.status(400).json({
+        message: "Tổng số tiền không hợp lệ .",
+        status: false,
+      });
+    }
 
     if (!object.stk || !object.stk_bank || !object.stk_name) {
       return res.status(400).json({
