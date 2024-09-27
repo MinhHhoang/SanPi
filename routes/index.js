@@ -13,6 +13,7 @@ const CoinController = require('../controllers/coin.controller');
 const OrderCoinController = require('../controllers/order_coin.controller');
 const ContactController = require('../controllers/contact.controller');
 const SettingController = require('../controllers/setting.controller');
+const BuyCoinController = require('../controllers/buy_coin.controller');
 
 const authValidate = require('../validatons/employee.validation');
 const CustomerValidate = require('../validatons/customer.validation');
@@ -21,6 +22,7 @@ const GuidlineValidate = require('../validatons/guidline.validation');
 const CoinValidate = require('../validatons/coin.validation');
 const OrderCoinValidate = require('../validatons/order_coin.validation');
 const ContactValidate = require('../validatons/contact.validation');
+const BuyCoinValidate = require('../validatons/buy_coin.validation');
 
 
 //Employee
@@ -80,6 +82,14 @@ router.get('/admin/order-coins', AuthGuard,  ErrorHandler(OrderCoinController.ge
 router.put('/order-coins/cancel/:id', AuthGuard,  ErrorHandler(OrderCoinController.cancelOrder));
 router.put('/order-coins/submit/:id', AuthGuard,  ErrorHandler(OrderCoinController.submitOrder));
 router.get('/order-coins/search',  ErrorHandler(OrderCoinController.searchOrder));
+
+
+//Rút Pi
+router.post('/order-draw/create', AuthGuard, validate(BuyCoinValidate.create), ErrorHandler(BuyCoinController.create));
+router.get('/order-coins', AuthGuard,  ErrorHandler(BuyCoinController.getCoinOrdersForCustomer));
+router.get('/admin/order-draw', AuthGuard,  ErrorHandler(BuyCoinController.getCoinOrdersAdmin));
+router.put('/order-draw/cancel/:id', AuthGuard,  ErrorHandler(BuyCoinController.cancelOrder));
+router.put('/order-draw/submit/:id', AuthGuard,  ErrorHandler(BuyCoinController.submitlOrder));
 
 //Setting
 router.get('/setting', ErrorHandler(SettingController.getObjectById));
