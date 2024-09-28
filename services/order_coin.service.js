@@ -34,12 +34,16 @@ exports.findAll = (page, limit, customer_id, type, sku) => {
       type_order: type,
       sku: { [Op.like]: `%${sku}%` },
     },
-    order: [['id', 'DESC']], // Order by id in descending order
-    limit: +limit,           // Limit the number of results per page
-    offset: skip,           // Skip to the correct page
+    order: [["id", "DESC"]], // Order by id in descending order
+    limit: +limit, // Limit the number of results per page
+    offset: skip, // Skip to the correct page
+    include: [
+      {
+        model: Customers, // Model Sequelize đại diện cho bảng Customer
+      },
+    ],
   });
 };
-
 
 exports.findAllAdmin = (page, limit, sku, type) => {
   const skip = (page - 1) * limit;
@@ -48,7 +52,7 @@ exports.findAllAdmin = (page, limit, sku, type) => {
       sku: { [Op.like]: `%${sku}%` },
       type_order: type,
     },
-    order: [['id', 'DESC']], // Order by id in descending order
+    order: [["id", "DESC"]], // Order by id in descending order
     limit: +limit,
     offset: skip,
     include: [
@@ -59,12 +63,12 @@ exports.findAllAdmin = (page, limit, sku, type) => {
   });
 };
 
-
-exports.getTotal = (customer_id, type) => {
+exports.getTotal = (customer_id, type, sku) => {
   return Model.count({
     where: {
       customer_id: customer_id,
       type_order: type,
+      sku: { [Op.like]: `%${sku}%` },
     },
   });
 };
@@ -73,7 +77,7 @@ exports.getTotalInProcess = (customer_id) => {
   return Model.count({
     where: {
       customer_id: customer_id,
-      status_order: 'IN_PROCESS',
+      status_order: "IN_PROCESS",
     },
   });
 };

@@ -159,15 +159,10 @@ exports.getCoinOrders = async (req, res) => {
   var limit = req.query.limit || 10;
   var type = req.query.type || "BUY";
   var sku = req.query.sku || "";
+  var customer_id = req.query?.customerId || req.employeeCurrent.id;
 
-  var ordercoins = await Service.findAll(
-    page,
-    limit,
-    req.employeeCurrent.id,
-    type,
-    sku
-  );
-  var total = await Service.getTotal(req.employeeCurrent.id, type);
+  var ordercoins = await Service.findAll(page, limit, customer_id, type, sku);
+  var total = await Service.getTotal(customer_id, type,sku);
 
   return res.status(200).json({
     results: ordercoins.length,
@@ -362,7 +357,8 @@ exports.create = async (req, res) => {
 
   return res.json({
     order_coin: order_coin,
-    message: "Đơn hàng của bạn đã tạo thành công Vui lòng chờ hệ thống xử lý đơn hàng của bạn và bạn có thể theo dõi tiến độ đơn hàng trong menu Đơn hàng của tôi",
+    message:
+      "Đơn hàng của bạn đã tạo thành công Vui lòng chờ hệ thống xử lý đơn hàng của bạn và bạn có thể theo dõi tiến độ đơn hàng trong menu Đơn hàng của tôi",
     status: true,
   });
 };

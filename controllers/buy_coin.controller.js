@@ -75,14 +75,10 @@ exports.getCoinOrdersForCustomer = async (req, res) => {
   var page = req.query.page || 1;
   var limit = req.query.limit || 10;
   var sku = req.query.sku || "";
+  var customer_id = req.query?.customerId || req.employeeCurrent.id;
 
-  var ordercoins = await Service.findAll(
-    page,
-    limit,
-    req.employeeCurrent.id,
-    sku
-  );
-  var total = await Service.getTotal(req.employeeCurrent.id);
+  var ordercoins = await Service.findAll(page, limit, customer_id, sku);
+  var total = await Service.getTotal(customer_id, sku);
 
   return res.status(200).json({
     results: ordercoins.length,
@@ -98,7 +94,7 @@ exports.getCoinOrdersAdmin = async (req, res) => {
   var sku = req.query.sku || "";
 
   var ordercoins = await Service.findAllAdmin(page, limit, sku);
-  var total = await Service.getTotalAdmin(sku, type);
+  var total = await Service.getTotalAdmin(sku);
 
   return res.status(200).json({
     results: ordercoins.length,
@@ -131,20 +127,31 @@ exports.create = async (req, res) => {
 
   if (type_coin === TYPE_COIN.PI_NETWORD) {
     if (wallet_coin !== customer.wallet_pi) {
-      return res.status(400).json({ message: walletMismatchMessage, status: false });
+      return res
+        .status(400)
+        .json({ message: walletMismatchMessage, status: false });
     }
     if (count_coin > customer.picoin) {
-      return res.status(400).json({ message: insufficientBalanceMessage, status: false });
+      return res
+        .status(400)
+        .json({ message: insufficientBalanceMessage, status: false });
     }
     updatedBalance = { ...customer, picoin: customer.picoin - count_coin };
   } else {
     if (wallet_coin !== customer.wallet_sidra) {
-      return res.status(400).json({ message: walletMismatchMessage, status: false });
+      return res
+        .status(400)
+        .json({ message: walletMismatchMessage, status: false });
     }
     if (count_coin > customer.sidracoin) {
-      return res.status(400).json({ message: insufficientBalanceMessage, status: false });
+      return res
+        .status(400)
+        .json({ message: insufficientBalanceMessage, status: false });
     }
-    updatedBalance = { ...customer, sidracoin: customer.sidracoin - count_coin };
+    updatedBalance = {
+      ...customer,
+      sidracoin: customer.sidracoin - count_coin,
+    };
   }
 
   // Update customer balance
@@ -180,7 +187,6 @@ exports.create = async (req, res) => {
     status: true,
   });
 };
-
 
 function generateSKU() {
   const now = new Date();
