@@ -29,6 +29,7 @@ exports.findById = (id) => {
 exports.findAll = (page, limit, customer_id, sku) => {
   const skip = (page - 1) * limit;
   return Model.findAll({
+    order: [['id', 'DESC']], 
     limit: +limit,
     offset: skip,
     where: {
@@ -41,6 +42,7 @@ exports.findAll = (page, limit, customer_id, sku) => {
 exports.findAllAdmin = (page, limit, sku) => {
   const skip = (page - 1) * limit;
   return Model.findAll({
+    order: [['id', 'DESC']], 
     limit: +limit,
     offset: skip,
     where: {
