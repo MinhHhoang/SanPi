@@ -29,25 +29,28 @@ exports.findById = (id) => {
 exports.findAll = (page, limit, customer_id, type, sku) => {
   const skip = (page - 1) * limit;
   return Model.findAll({
-    limit: +limit,
-    offset: skip,
     where: {
       customer_id: customer_id,
       type_order: type,
       sku: { [Op.like]: `%${sku}%` },
     },
+    order: [['id', 'DESC']], // Order by id in descending order
+    limit: +limit,           // Limit the number of results per page
+    offset: skip,           // Skip to the correct page
   });
 };
+
 
 exports.findAllAdmin = (page, limit, sku, type) => {
   const skip = (page - 1) * limit;
   return Model.findAll({
-    limit: +limit,
-    offset: skip,
     where: {
       sku: { [Op.like]: `%${sku}%` },
       type_order: type,
     },
+    order: [['id', 'DESC']], // Order by id in descending order
+    limit: +limit,
+    offset: skip,
     include: [
       {
         model: Customers, // Model Sequelize đại diện cho bảng Customer
@@ -55,6 +58,7 @@ exports.findAllAdmin = (page, limit, sku, type) => {
     ],
   });
 };
+
 
 exports.getTotal = (customer_id, type) => {
   return Model.count({
