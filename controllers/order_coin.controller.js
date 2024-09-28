@@ -362,7 +362,7 @@ exports.create = async (req, res) => {
 
   return res.json({
     order_coin: order_coin,
-    message: "Đã gửi yêu cầu của bạn",
+    message: "Đơn hàng của bạn đã tạo thành công Vui lòng chờ hệ thống xử lý đơn hàng của bạn và bạn có thể theo dõi tiến độ đơn hàng trong menu Đơn hàng của tôi",
     status: true,
   });
 };
