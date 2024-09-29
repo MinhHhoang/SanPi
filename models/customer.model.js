@@ -42,5 +42,8 @@ const Customers = sequelize.define('Customers', {
     wallet_sidra: {
         type: DataTypes.STRING 
     },
+    active: {
+        type: DataTypes.TINYINT(1)
+    },
 }); 
 module.exports = Customers;

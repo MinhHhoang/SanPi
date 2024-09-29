@@ -20,6 +20,7 @@ exports.create = async (req, res) => {
         phone: req.body.phone,
         ref_email: req.body.ref_email,
         password: hashedPassword,
+        active: 1,
     }
 
     const customer = await Service.create(object);
@@ -31,6 +32,30 @@ exports.create = async (req, res) => {
         message: 'Tạo mới thành công.'
     });
 }
+
+exports.setActive = async (req, res) => {
+    let customer = await Service.findById(req.params.id);
+  
+    if (!customer) {
+      return res.json({
+        message: "Khách hàng không tồn tại.",
+        status: false,
+      });
+    }
+  
+    const cusData = {
+      ...customer,
+      active: !customer["active"],
+    };
+  
+    await Service.update(cusData, req.params.id);
+  
+    return res.json({
+      message: "Cập nhật trạng thái khách hàng thành công.",
+      status: true,
+    });
+  };
+  
 
 
 exports.update = async (req, res) => {

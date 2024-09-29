@@ -68,6 +68,7 @@ router.post('/customer/login', validate(CustomerValidate.login), ErrorHandler(Cu
 router.get('/customer/logout', AuthGuard, ErrorHandler(CustomerController.logout));
 router.get('/customer/search', AuthGuard, ErrorHandler(CustomerController.getCustomers));
 router.get('/customer/:id', AuthGuard, ErrorHandler(CustomerController.getCustomerID));
+router.put('/customer/active/:id', AuthGuard, ErrorHandler(CustomerController.setActive));
 router.put('/customer/changepassword/:id', AuthGuard, ErrorHandler(CustomerController.changePassword));
 router.put('/customer/:id', AuthGuard, validate(CustomerValidate.update), ErrorHandler(CustomerController.update));
 router.put('/customer/banking/:id', AuthGuard, validate(CustomerValidate.updateBanking), ErrorHandler(CustomerController.updateBanking));
