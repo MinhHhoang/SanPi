@@ -34,10 +34,10 @@ module.exports = {
   }),
 
   update_wallet_pi: Joi.object().keys({
-    wallet_pi: Joi.string().required(),
+    wallet_pi: Joi.string().allow("").allow(null),
   }),
   update_wallet_sidra: Joi.object().keys({
-    wallet_sidra: Joi.string().required(),
+    wallet_sidra: Joi.string().allow("").allow(null),
   }),
   login: Joi.object().keys({
     email: Joi.string().email().required(),
