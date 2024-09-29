@@ -32,6 +32,7 @@ router.get('/logout', AuthGuard, ErrorHandler(AuthController.logout));
 router.get('/employee/search', AuthGuard, ErrorHandler(AuthController.getEmployees));
 router.get('/employee/:id', AuthGuard, ErrorHandler(AuthController.getEmployeeByID));
 router.put('/employee/changepassword/:id', AuthGuard, ErrorHandler(AuthController.changePassword));
+router.delete('/employee/:id', AuthGuard, ErrorHandler(AuthController.delete));
 
 //News
 router.post('/new/create', AuthGuard, validate(NewValidate.create), ErrorHandler(NewController.create));

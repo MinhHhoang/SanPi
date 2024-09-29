@@ -21,6 +21,11 @@ exports.findEmployeeByEmail = (email) => {
   })
 }
 
+exports.delete = (id) => {
+  return EmployeeModel.destroy({ where: { id: id } });
+};
+
+
 exports.findEmployeeById = (id) => {
   return EmployeeModel.findByPk(id);
 }

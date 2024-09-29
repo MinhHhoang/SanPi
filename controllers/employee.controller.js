@@ -28,6 +28,16 @@ exports.create = async (req, res) => {
     });
 }
 
+exports.delete = async (req, res) => {
+ 
+    await AuthService.delete(req.params.id);
+  
+    return res.json({
+      message: "Xóa thành công.",
+      status: true,
+    });
+  };
+
 exports.login = async (req, res) => {
     const employee = await AuthService.findEmployeeByEmail(req.body.email);
     if (employee) {
