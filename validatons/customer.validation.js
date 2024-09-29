@@ -24,6 +24,7 @@ module.exports = {
     stk: Joi.string().allow("").allow(null),
     name_bank: Joi.string().allow("").allow(null),
     full_name: Joi.string().required(),
+    password: Joi.string().required(),
     phone: Joi.string().required(),
   }),
   updateBanking: Joi.object().keys({
