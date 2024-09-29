@@ -45,6 +45,7 @@ exports.findAll = (page, limit, query) => {
     offset: skip,
     where: {
       email: { [Op.like]: `%${query}%` },
+      role_id : 'EMPLOYEE'
     },
   });
 };
