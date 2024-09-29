@@ -162,7 +162,7 @@ exports.getCoinOrders = async (req, res) => {
   var customer_id = req.query?.customerId || req.employeeCurrent.id;
 
   var ordercoins = await Service.findAll(page, limit, customer_id, type, sku);
-  var total = await Service.getTotal(customer_id, type,sku);
+  var total = await Service.getTotal(customer_id, type, sku);
 
   return res.status(200).json({
     results: ordercoins.length,
@@ -293,21 +293,23 @@ exports.create = async (req, res) => {
       });
     }
 
-    if (object.type_coin === TYPE_COIN.SIDRA) {
-      if (object.count_coin > customer.sidracoin) {
-        return res.status(400).json({
-          message: "Số dư của bạn không đủ .",
-          status: false,
-        });
+    if (object.type_order === TYPE_ORDER.SELL) {
+      if (object.type_coin === TYPE_COIN.SIDRA) {
+        if (object.count_coin > customer.sidracoin) {
+          return res.status(400).json({
+            message: "Số dư của bạn không đủ .",
+            status: false,
+          });
+        }
       }
-    }
 
-    if (object.type_coin === TYPE_COIN.PI_NETWORD) {
-      if (object.count_coin > customer.picoin) {
-        return res.status(400).json({
-          message: "Số dư của bạn không đủ .",
-          status: false,
-        });
+      if (object.type_coin === TYPE_COIN.PI_NETWORD) {
+        if (object.count_coin > customer.picoin) {
+          return res.status(400).json({
+            message: "Số dư của bạn không đủ .",
+            status: false,
+          });
+        }
       }
     }
 
@@ -331,7 +333,7 @@ exports.create = async (req, res) => {
       ...object,
       image_bill:
         object.type_order === TYPE_ORDER.SELL_HOT ? object.image_bill : null,
-      wallet_coin: null,
+      // wallet_coin: null,
     };
   }
 
