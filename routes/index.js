@@ -32,6 +32,7 @@ router.get('/logout', AuthGuard, ErrorHandler(AuthController.logout));
 router.get('/employee/search', AuthGuard, ErrorHandler(AuthController.getEmployees));
 router.get('/employee/:id', AuthGuard, ErrorHandler(AuthController.getEmployeeByID));
 router.put('/employee/changepassword/:id', AuthGuard, ErrorHandler(AuthController.changePassword));
+router.delete('/employee/:id', AuthGuard, ErrorHandler(AuthController.delete));
 
 //News
 router.post('/new/create', AuthGuard, validate(NewValidate.create), ErrorHandler(NewController.create));
@@ -67,6 +68,7 @@ router.post('/customer/login', validate(CustomerValidate.login), ErrorHandler(Cu
 router.get('/customer/logout', AuthGuard, ErrorHandler(CustomerController.logout));
 router.get('/customer/search', AuthGuard, ErrorHandler(CustomerController.getCustomers));
 router.get('/customer/:id', AuthGuard, ErrorHandler(CustomerController.getCustomerID));
+router.put('/customer/active/:id', AuthGuard, ErrorHandler(CustomerController.setActive));
 router.put('/customer/changepassword/:id', AuthGuard, ErrorHandler(CustomerController.changePassword));
 router.put('/customer/:id', AuthGuard, validate(CustomerValidate.update), ErrorHandler(CustomerController.update));
 router.put('/customer/banking/:id', AuthGuard, validate(CustomerValidate.updateBanking), ErrorHandler(CustomerController.updateBanking));

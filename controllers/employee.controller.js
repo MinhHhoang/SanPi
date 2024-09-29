@@ -17,7 +17,7 @@ exports.create = async (req, res) => {
 
     const empData = {
         email: req.body.email,
-        roleid: ROLEID.EMPLOYEE,
+        role_id: ROLEID.EMPLOYEE,
         password: hashedPassword,
     }
 
@@ -27,6 +27,16 @@ exports.create = async (req, res) => {
         message: 'Tạo mới nhân viên thành công.'
     });
 }
+
+exports.delete = async (req, res) => {
+ 
+    await AuthService.delete(req.params.id);
+  
+    return res.json({
+      message: "Xóa thành công.",
+      status: true,
+    });
+  };
 
 exports.login = async (req, res) => {
     const employee = await AuthService.findEmployeeByEmail(req.body.email);

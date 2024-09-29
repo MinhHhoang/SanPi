@@ -21,6 +21,11 @@ exports.findEmployeeByEmail = (email) => {
   })
 }
 
+exports.delete = (id) => {
+  return EmployeeModel.destroy({ where: { id: id } });
+};
+
+
 exports.findEmployeeById = (id) => {
   return EmployeeModel.findByPk(id);
 }
@@ -40,6 +45,7 @@ exports.findAll = (page, limit, query) => {
     offset: skip,
     where: {
       email: { [Op.like]: `%${query}%` },
+      role_id : 'EMPLOYEE'
     },
   });
 };
