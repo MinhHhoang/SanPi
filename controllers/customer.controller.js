@@ -174,7 +174,7 @@ exports.login = async (req, res) => {
     const customer = await Service.findByEmail(req.body.email);
     if (customer) {
         const isMatched = await bcryptUtil.compareHash(req.body.password, customer.password);
-        if (isMatched) {
+        if (isMatched && customer.active == 1) {
             const token = await jwtUtil.createToken({ ...customer });
             return res.json({
                 customer: customer,
