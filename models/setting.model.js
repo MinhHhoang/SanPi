@@ -3,7 +3,7 @@ const { DataTypes } = require("sequelize");
 
 const Settings = sequelize.define("Settings", {
   fee_order: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.FLOAT,
   },
   payments: {
     type: DataTypes.JSON,
