@@ -62,12 +62,19 @@ exports.update = async (req, res) => {
 
     var result = await Service.findById(req.params.id);
 
+
+    let hashedPassword = req.body.password;
+    if (result.password !== req.body.password) {
+        hashedPassword = await bcryptUtil.createHash(req.body.password);
+    }
+
+
     const object = {
         ...result,
         image: req.body.image,
         full_name: req.body.full_name,
         phone: req.body.phone,
-
+        password: hashedPassword,
     }
 
     await Service.update(object, req.params.id);
