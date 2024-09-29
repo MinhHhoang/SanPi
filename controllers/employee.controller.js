@@ -17,7 +17,7 @@ exports.create = async (req, res) => {
 
     const empData = {
         email: req.body.email,
-        roleid: ROLEID.EMPLOYEE,
+        role_id: ROLEID.EMPLOYEE,
         password: hashedPassword,
     }
 
