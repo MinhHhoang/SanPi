@@ -246,7 +246,7 @@ exports.create = async (req, res) => {
   const coin = await ServiceCoin.findByCodeCoin(object.type_coin);
   const customer = await ServiceCustomer.findByEmail(req.employeeCurrent.email);
 
-  if (object.count_coin < 5) {
+  if (object.count_coin < 1) {
     return res.status(400).json({
       message: "Số lượng không hợp lệ",
       status: false,
