@@ -50,26 +50,54 @@ exports.submitlOrder = async (req, res) => {
 };
 
 exports.cancelOrder = async (req, res) => {
-  var order = await Service.findById(req.params.id);
+  try {
+    const orderId = req.params.id;
 
-  if (!order || order.status_order !== STATUS_ORDER.IN_PROCESS) {
-    return res.status(400).json({
-      message: "Đơn hàng này không tồn tại hoặc đã được xử lý.",
+    // Fetch both order and customer in a single query
+    const [order, customer] = await Promise.all([
+      Service.findById(orderId),
+      ServiceCustomer.findById(order.customer_id),
+    ]);
+
+    // Check for valid order and status early
+    if (!order || order.status_order !== STATUS_ORDER.IN_PROCESS) {
+      return res.status(400).json({
+        message: "Đơn hàng này không tồn tại hoặc đã được xử lý.",
+        status: false,
+      });
+    }
+
+    // Prepare updated coin amount based on the coin type
+    const coinType = order.type_coin === TYPE_COIN.PI_NETWORD ? 'picoin' : 'sidracoin';
+    const updatedAmount = Number(customer[coinType]) + Number(order.count_coin);
+
+    // Update the customer's coin amount in a single call
+    await ServiceCustomer.update(
+      { ...customer, [coinType]: updatedAmount },
+      order.customer_id
+    );
+
+    // Update the order status
+    const updatedOrder = await Service.update(
+      { ...order, status_order: STATUS_ORDER.CANCEL },
+      order.id
+    );
+
+    return res.status(200).json({
+      order: updatedOrder,
+      message: "Đơn hàng đã được hủy.",
+      status: true,
+    });
+  } catch (error) {
+    console.error("Error canceling order:", error); // Log the error for debugging
+    return res.status(500).json({
+      message: "Có lỗi xảy ra khi hủy đơn hàng.",
       status: false,
+      error: error.message,
     });
   }
-
-  order = await Service.update(
-    { ...order, status_order: STATUS_ORDER.CANCEL },
-    order.id
-  );
-
-  return res.status(200).json({
-    order: order,
-    message: "Đơn hàng đã được hủy.",
-    status: true,
-  });
 };
+
 
 exports.getCoinOrdersForCustomer = async (req, res) => {
   var page = req.query.page || 1;
